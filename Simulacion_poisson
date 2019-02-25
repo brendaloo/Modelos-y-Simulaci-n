@@ -1,0 +1,72 @@
+#Simulacion Poisson 
+#Crear una lista o secuencia
+#Puede ser creada con seq o una simple lista
+seq(0:15)
+polizas<-(0:80)
+n<-22
+prob<-dpois(polizas,n)
+#La funcion cbind permite agrupar objetos
+informef<-cbind(polizas,prob);informef
+#Grafico de las probabilidades
+plot(polizas,prob, type = "b",xlab = "Polizas")
+#Otra forma de grificar
+plot(polizas,prob, type = "l",xlab = "Polizas")
+points(polizas,prob)
+#Calculo de las probabilidades menores o iguales p[X<=x]
+F<-cumsum(prob);F
+#Otra forma de calculo
+Fx3<-ppois(3,2);Fx3
+Fx<-ppois(polizas, 22);Fx
+#graficos de la distribucion acumulada
+#La probabilidad entre los puntos permanece constante
+#Por lo que se empleara un grafico escalonado
+informeF<-cbind(polizas,Fx);informeF
+plot(polizas, Fx, type = "S")
+plot(polizas, Fx, type = "b")
+plot(polizas, prob, col = "Red")
+#Calculo de la media y varianza 
+#E[x]=suma(xi*prob(xi))
+media1=sum(polizas*prob)
+media1
+#Empleando los resultados dpois
+media2<-n
+media2
+#Varianza
+segundo<-sum((polizas^2)*prob)
+segundo
+var<-segundo-media1^2
+var
+#Varianza con paremetro
+var1<-n
+var1
+#var
+var2<-sum(((polizas-media1)^2)*prob)
+var2
+#ejemplo para el calculo de percentiles
+#Calcule el valor que deja por debajo el 30% de los siniestros
+q30<-qpois(.3,n);q30
+percentiles<-seq(.1, by=.05)
+lpercent<-qpois(perecentiles,n)
+informe_p<-cbind(percentiles*100,lpercent);informe_p
+plot(informe_p, type = "b", xlab = "Percentiles", ylab = "Siniestros")
+#Analisis de los percentiles ¿como se comporta la cartera?
+#¿Que informacion proporciona los percentiles 
+#Calcular tercer momento
+sesgo<-n^(-1/2)
+sesgo
+#Obtener las siguientes probabilidades
+#Tener 9 siniestros P[x=9]
+nueve<-dpois(9,n)
+nueve
+#Tener 5 o menos siniestros P[x<=5]
+cinco<-ppois(5,n)
+cinco
+#Tener mas de 7 siniestros P[x>7]=1-P(x<=7)
+siete=1-ppois(7,n)
+siete
+#Tener 8 o mas siniestros P[x>=8]=1-P[x<=8]-P[x=8]
+ocho=1-ppois(7,n);ocho
+#Tener al menos 4 y a lo mucho 11 siniestros P[4<=x<=11]=P[x=4]+P[x=5]....+P[x=11]=P[x=11]-P[x<=3]
+entre4y11<-ppois(11,n)-ppois(3,n);entre4y11
+#Tener entre 1 y 8 siniestros 
+entre1y8<-ppois(7,n)-ppois(1,n);entre1y8
